@@ -16,8 +16,19 @@ class Calendar extends StatefulWidget {
   final bool showTodayAction;
   final bool showCalendarPickerIcon;
   final DateTime initialCalendarDateOverride;
+  final String todayText;
 
-  Calendar({this.onDateSelected, this.onSelectedRangeChange, this.isExpandable: false, this.dayBuilder, this.showTodayAction: true, this.showChevronsToChangeRange: true, this.showCalendarPickerIcon: true, this.initialCalendarDateOverride});
+  Calendar({
+    this.onDateSelected,
+    this.onSelectedRangeChange,
+    this.isExpandable: false,
+    this.dayBuilder,
+    this.showTodayAction: true,
+    this.showChevronsToChangeRange: true,
+    this.showCalendarPickerIcon: true,
+    this.initialCalendarDateOverride,
+    this.todayText = 'Today',
+  });
 
   @override
   _CalendarState createState() => new _CalendarState();
@@ -87,7 +98,7 @@ class _CalendarState extends State<Calendar> {
 
     if (widget.showTodayAction) {
       leftInnerIcon = new InkWell(
-        child: new Text('Today'),
+        child: new Text(widget.todayText),
         onTap: resetToToday,
       );
     } else {
