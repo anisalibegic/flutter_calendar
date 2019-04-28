@@ -10,6 +10,7 @@ class CalendarTile extends StatelessWidget {
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
   final Widget child;
+  final Color selectedTextColor;
 
   CalendarTile({
     this.onDateSelected,
@@ -20,6 +21,7 @@ class CalendarTile extends StatelessWidget {
     this.dayOfWeekStyles,
     this.isDayOfWeek: false,
     this.isSelected: false,
+    this.selectedTextColor = Colors.white,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
@@ -33,25 +35,29 @@ class CalendarTile extends StatelessWidget {
           ),
         ),
       );
-    } else {
-      return new InkWell(
-        onTap: onDateSelected,
-        child: new Container(
-          decoration: isSelected
-              ? new BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor,
-                )
-              : new BoxDecoration(),
-          alignment: Alignment.center,
-          child: new Text(
-            Utils.formatDay(date).toString(),
-            style: isSelected ? Theme.of(context).primaryTextTheme.body1 : dateStyles,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
     }
+
+    return new InkWell(
+      onTap: onDateSelected,
+      child: new Container(
+        decoration: isSelected
+            ? new BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).primaryColor,
+              )
+            : new BoxDecoration(),
+        alignment: Alignment.center,
+        child: new Text(
+          Utils.formatDay(date).toString(),
+          style: isSelected
+              ? Theme.of(context).primaryTextTheme.body1.copyWith(
+                    color: selectedTextColor,
+                  )
+              : dateStyles,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 
   @override
