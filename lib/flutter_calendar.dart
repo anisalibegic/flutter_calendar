@@ -42,6 +42,11 @@ class _CalendarState extends State<Calendar> {
     selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
     displayMonth = Utils.formatMonth(_selectedDate);
 
+    print(firstDayOfCurrentWeek);
+    print(lastDayOfCurrentWeek);
+    print(selectedWeeksDays);
+    print(displayMonth);
+
     updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
   }
 
