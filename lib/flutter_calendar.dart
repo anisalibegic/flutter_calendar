@@ -38,16 +38,22 @@ class _CalendarState extends State<Calendar> {
     if (widget.initialCalendarDateOverride != null) _selectedDate = widget.initialCalendarDateOverride;
     selectedMonthsDays = Utils.daysInMonth(_selectedDate);
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
+    var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
     selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
     displayMonth = Utils.formatMonth(_selectedDate);
 
-    print(firstDayOfCurrentWeek);
-    print(lastDayOfCurrentWeek);
-    print(selectedWeeksDays);
-    print(displayMonth);
-
     updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
+  }
+
+  DateTime lastDayOfWeek(DateTime day) {
+    /// Handle Daylight Savings by setting hour to 12:00 Noon
+    /// rather than the default of Midnight
+    day = new DateTime.utc(day.year, day.month, day.day);
+
+    /// Weekday is on a 1-7 scale Monday - Sunday,
+    /// This Calendar's Week starts on Sunday
+    var increaseNum = day.weekday % 7;
+    return day.add(new Duration(days: 7 - increaseNum));
   }
 
   Widget get nameAndIconRow {
@@ -233,7 +239,7 @@ class _CalendarState extends State<Calendar> {
   void resetToToday() {
     _selectedDate = new DateTime.now();
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
+    var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
 
     setState(() {
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList();
@@ -270,7 +276,7 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDate = Utils.nextWeek(_selectedDate);
       var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-      var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
+      var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
       displayMonth = Utils.formatMonth(_selectedDate);
@@ -282,7 +288,7 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDate = Utils.previousWeek(_selectedDate);
       var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-      var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
+      var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
       displayMonth = Utils.formatMonth(_selectedDate);
@@ -307,7 +313,7 @@ class _CalendarState extends State<Calendar> {
 
     if (selected != null) {
       var firstDayOfCurrentWeek = Utils.firstDayOfWeek(selected);
-      var lastDayOfCurrentWeek = Utils.lastDayOfWeek(selected);
+      var lastDayOfCurrentWeek = lastDayOfWeek(selected);
 
       setState(() {
         _selectedDate = selected;
@@ -360,7 +366,7 @@ class _CalendarState extends State<Calendar> {
 
   void handleSelectedDateAndUserCallback(DateTime day) {
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(day);
-    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(day);
+    var lastDayOfCurrentWeek = lastDayOfWeek(day);
     setState(() {
       _selectedDate = day;
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList();
