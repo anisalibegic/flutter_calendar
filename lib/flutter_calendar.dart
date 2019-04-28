@@ -42,9 +42,7 @@ class _CalendarState extends State<Calendar> {
     selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
     displayMonth = Utils.formatMonth(_selectedDate);
 
-    var firstDateOfNewMonth = Utils.firstDayOfMonth(_selectedDate);
-    var lastDateOfNewMonth = Utils.lastDayOfMonth(_selectedDate);
-    updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
+    updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
   }
 
   Widget get nameAndIconRow {
