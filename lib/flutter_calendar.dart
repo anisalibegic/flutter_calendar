@@ -131,11 +131,11 @@ class _CalendarState extends State<Calendar> {
         child: new GridView.count(
           shrinkWrap: true,
           crossAxisCount: 7,
-          padding: new EdgeInsets.all(0.0),
+          childAspectRatio: 1.5,
+          padding: new EdgeInsets.only(bottom: 0.0),
           children: calendarBuilder(),
         ),
       ),
-      color: Colors.red,
     );
   }
 
@@ -237,8 +237,12 @@ class _CalendarState extends State<Calendar> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           nameAndIconRow,
-          calendarGridView,
-          expansionButtonRow,
+          new ExpansionCrossFade(
+            collapsed: calendarGridView,
+            expanded: calendarGridView,
+            isExpanded: isExpanded,
+          ),
+          expansionButtonRow
         ],
       ),
     );

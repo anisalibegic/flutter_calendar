@@ -26,13 +26,14 @@ class CalendarTile extends StatelessWidget {
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
     if (isDayOfWeek) {
-      return new Container(
-        alignment: Alignment.center,
-        child: new Text(
-          dayOfWeek,
-          style: dayOfWeekStyles,
+      return new InkWell(
+        child: new Container(
+          alignment: Alignment.center,
+          child: new Text(
+            dayOfWeek,
+            style: dayOfWeekStyles,
+          ),
         ),
-        color: Colors.green,
       );
     }
 
