@@ -131,7 +131,7 @@ class _CalendarState extends State<Calendar> {
         child: new GridView.count(
           shrinkWrap: true,
           crossAxisCount: 7,
-          padding: new EdgeInsets.only(bottom: 0.0),
+          padding: new EdgeInsets.all(0.0),
           children: calendarBuilder(),
         ),
       ),
