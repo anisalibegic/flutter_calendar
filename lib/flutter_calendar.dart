@@ -113,7 +113,7 @@ class _CalendarState extends State<Calendar> {
         new Text(
           displayMonth,
           style: new TextStyle(
-            fontSize: 20.0,
+            fontSize: 18.0,
           ),
         ),
         rightInnerIcon ?? new Container(),
