@@ -26,7 +26,7 @@ class CalendarTile extends StatelessWidget {
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
     return Container();
-    
+
     if (isDayOfWeek) {
       return new InkWell(
         child: new Container(
