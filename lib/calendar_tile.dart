@@ -60,10 +60,7 @@ class CalendarTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (child != null) {
-      return new InkWell(
-        child: child,
-        onTap: onDateSelected,
-      );
+      return child;
     }
     return new Container(
       child: renderDateOrDayOfWeek(context),
