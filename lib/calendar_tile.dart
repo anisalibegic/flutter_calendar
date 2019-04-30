@@ -37,25 +37,22 @@ class CalendarTile extends StatelessWidget {
       );
     }
 
-    return new InkWell(
-      onTap: onDateSelected,
-      child: new Container(
-        decoration: isSelected
-            ? new BoxDecoration(
-                shape: BoxShape.circle,
-                color: Theme.of(context).primaryColor,
-              )
-            : new BoxDecoration(),
-        alignment: Alignment.center,
-        child: new Text(
-          Utils.formatDay(date).toString(),
-          style: isSelected
-              ? Theme.of(context).primaryTextTheme.body1.copyWith(
-                    color: selectedTextColor,
-                  )
-              : dateStyles,
-          textAlign: TextAlign.center,
-        ),
+    return new Container(
+      decoration: isSelected
+          ? new BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).primaryColor,
+            )
+          : new BoxDecoration(),
+      alignment: Alignment.center,
+      child: new Text(
+        Utils.formatDay(date).toString(),
+        style: isSelected
+            ? Theme.of(context).primaryTextTheme.body1.copyWith(
+                  color: selectedTextColor,
+                )
+            : dateStyles,
+        textAlign: TextAlign.center,
       ),
     );
   }
