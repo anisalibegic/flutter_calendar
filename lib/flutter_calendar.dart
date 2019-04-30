@@ -135,6 +135,7 @@ class _CalendarState extends State<Calendar> {
           children: calendarBuilder(),
         ),
       ),
+      color: Colors.red,
     );
   }
 
