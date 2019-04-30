@@ -234,7 +234,11 @@ class _CalendarState extends State<Calendar> {
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[nameAndIconRow, calendarGridView, expansionButtonRow],
+        children: <Widget>[
+          nameAndIconRow,
+          calendarGridView,
+          expansionButtonRow,
+        ],
       ),
     );
   }
