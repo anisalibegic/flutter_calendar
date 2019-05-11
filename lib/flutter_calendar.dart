@@ -16,19 +16,8 @@ class Calendar extends StatefulWidget {
   final bool showTodayAction;
   final bool showCalendarPickerIcon;
   final DateTime initialCalendarDateOverride;
-  final String todayText;
 
-  Calendar({
-    this.onDateSelected,
-    this.onSelectedRangeChange,
-    this.isExpandable: false,
-    this.dayBuilder,
-    this.showTodayAction: true,
-    this.showChevronsToChangeRange: true,
-    this.showCalendarPickerIcon: true,
-    this.initialCalendarDateOverride,
-    this.todayText = 'Today',
-  });
+  Calendar({this.onDateSelected, this.onSelectedRangeChange, this.isExpandable: false, this.dayBuilder, this.showTodayAction: true, this.showChevronsToChangeRange: true, this.showCalendarPickerIcon: true, this.initialCalendarDateOverride});
 
   @override
   _CalendarState createState() => new _CalendarState();
@@ -49,22 +38,9 @@ class _CalendarState extends State<Calendar> {
     if (widget.initialCalendarDateOverride != null) _selectedDate = widget.initialCalendarDateOverride;
     selectedMonthsDays = Utils.daysInMonth(_selectedDate);
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-    var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
+    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
     selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
     displayMonth = Utils.formatMonth(_selectedDate);
-
-    updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
-  }
-
-  DateTime lastDayOfWeek(DateTime day) {
-    /// Handle Daylight Savings by setting hour to 12:00 Noon
-    /// rather than the default of Midnight
-    day = new DateTime.utc(day.year, day.month, day.day);
-
-    /// Weekday is on a 1-7 scale Monday - Sunday,
-    /// This Calendar's Week starts on Sunday
-    var increaseNum = day.weekday % 7;
-    return day.add(new Duration(days: 7 - increaseNum));
   }
 
   Widget get nameAndIconRow {
@@ -98,7 +74,7 @@ class _CalendarState extends State<Calendar> {
 
     if (widget.showTodayAction) {
       leftInnerIcon = new InkWell(
-        child: new Text(widget.todayText),
+        child: new Text('Today'),
         onTap: resetToToday,
       );
     } else {
@@ -113,7 +89,7 @@ class _CalendarState extends State<Calendar> {
         new Text(
           displayMonth,
           style: new TextStyle(
-            fontSize: 18.0,
+            fontSize: 20.0,
           ),
         ),
         rightInnerIcon ?? new Container(),
@@ -131,7 +107,6 @@ class _CalendarState extends State<Calendar> {
         child: new GridView.count(
           shrinkWrap: true,
           crossAxisCount: 7,
-          childAspectRatio: 1.6,
           padding: new EdgeInsets.only(bottom: 0.0),
           children: calendarBuilder(),
         ),
@@ -251,7 +226,7 @@ class _CalendarState extends State<Calendar> {
   void resetToToday() {
     _selectedDate = new DateTime.now();
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-    var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
+    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
 
     setState(() {
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList();
@@ -288,7 +263,7 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDate = Utils.nextWeek(_selectedDate);
       var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-      var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
+      var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
       displayMonth = Utils.formatMonth(_selectedDate);
@@ -300,7 +275,7 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDate = Utils.previousWeek(_selectedDate);
       var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
-      var lastDayOfCurrentWeek = lastDayOfWeek(_selectedDate);
+      var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList().sublist(0, 7);
       displayMonth = Utils.formatMonth(_selectedDate);
@@ -325,7 +300,7 @@ class _CalendarState extends State<Calendar> {
 
     if (selected != null) {
       var firstDayOfCurrentWeek = Utils.firstDayOfWeek(selected);
-      var lastDayOfCurrentWeek = lastDayOfWeek(selected);
+      var lastDayOfCurrentWeek = Utils.lastDayOfWeek(selected);
 
       setState(() {
         _selectedDate = selected;
@@ -378,7 +353,7 @@ class _CalendarState extends State<Calendar> {
 
   void handleSelectedDateAndUserCallback(DateTime day) {
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(day);
-    var lastDayOfCurrentWeek = lastDayOfWeek(day);
+    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(day);
     setState(() {
       _selectedDate = day;
       selectedWeeksDays = Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek).toList();
