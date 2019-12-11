@@ -7,7 +7,7 @@ main() {
 
 class CalendarViewApp extends StatelessWidget {
   void handleNewDate(date) {
-    print("handleNewDate ${date}");
+    print("handleNewDate $date");
   }
 
   @override
@@ -32,8 +32,7 @@ class CalendarViewApp extends StatelessWidget {
             children: <Widget>[
               new Text('The Default Calendar:'),
               new Calendar(
-                onSelectedRangeChange: (range) =>
-                    print("Range is ${range.item1}, ${range.item2}"),
+                onSelectedRangeChange: (range) => print("Range is ${range.item1}, ${range.item2}"),
                 onDateSelected: (date) => handleNewDate(date),
               ),
               new Divider(
@@ -41,8 +40,7 @@ class CalendarViewApp extends StatelessWidget {
               ),
               new Text('The Expanded Calendar:'),
               new Calendar(
-                onSelectedRangeChange: (range) =>
-                    print("Range is ${range.item1}, ${range.item2}"),
+                onSelectedRangeChange: (range) => print("Range is ${range.item1}, ${range.item2}"),
                 isExpandable: true,
               ),
               new Divider(
@@ -50,15 +48,13 @@ class CalendarViewApp extends StatelessWidget {
               ),
               new Text('A Custom Weekly Calendar:'),
               new Calendar(
-                onSelectedRangeChange: (range) =>
-                    print("Range is ${range.item1}, ${range.item2}"),
+                onSelectedRangeChange: (range) => print("Range is ${range.item1}, ${range.item2}"),
                 isExpandable: true,
                 dayBuilder: (BuildContext context, DateTime day) {
                   return new InkWell(
-                    onTap: () => print("OnTap ${day}"),
+                    onTap: () => print("OnTap $day"),
                     child: new Container(
-                      decoration: new BoxDecoration(
-                          border: new Border.all(color: Colors.black38)),
+                      decoration: new BoxDecoration(border: new Border.all(color: Colors.black38)),
                       child: new Text(
                         day.day.toString(),
                       ),
